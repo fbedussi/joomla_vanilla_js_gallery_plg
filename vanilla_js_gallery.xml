@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="plugin" group="content" method="upgrade">
+	<name>Simple pure JavaScript gallery</name>
+	<author>Francesco Bedussi</author>
+	<authorEmail>francesco@francescobedussi.it</authorEmail>
+	<authorUrl>www.francescobedussi.it</authorUrl>
+	<copyright>Copyright (c) 2014 Francesco Bedussi.</copyright>
+	<creationDate>Nov 14th, 2014</creationDate>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>3.0</version>
+	<description>Display a simple gallery using pure javaScript</description>
+	<!-- Parameters -->
+	<config>
+		<fields name="params"> 
+			<fieldset name="basic">
+				<field name="gallery_width" type="text" default="800" size="4" label="Gallery width (px)" description="Insert the width of the gallery in pixels" />
+				<field name="gallery_height" type="text" default="480" size="4" label="Gallery heigth (px)" description="Insert the heigth of the gallery in pixels" />
+				<field name="galleries_rootfolder" type="text" default="images" label="Galleries root folder" description="Galleries root folder" />
+
+			</fieldset>
+		</fields>
+	</config>
+	<!-- Files -->
+	<files folder="plugin" destination="vanilla_js_gallery">
+		<filename plugin="vanilla_js_gallery">vanilla_js_gallery.php</filename>
+		<filename plugin="vanilla_js_gallery">vanilla_js_gallery.xml</filename>
+		<folder>includes</folder>
+	</files>
+</extension>

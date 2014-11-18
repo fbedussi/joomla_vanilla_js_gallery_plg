@@ -1,4 +1,1 @@
 Language transaltion
-Image resize
-Del DS constant
-Better separation view/controller?

@@ -13,10 +13,7 @@
 	<config>
 		<fields name="params"> 
 			<fieldset name="basic">
-				<field name="gallery_width" type="text" default="800" size="4" label="Gallery width (px)" description="Insert the width of the gallery in pixels" />
-				<field name="gallery_height" type="text" default="480" size="4" label="Gallery heigth (px)" description="Insert the heigth of the gallery in pixels" />
 				<field name="galleries_rootfolder" type="text" default="images" label="Galleries root folder" description="Galleries root folder" />
-
 			</fieldset>
 		</fields>
 	</config>

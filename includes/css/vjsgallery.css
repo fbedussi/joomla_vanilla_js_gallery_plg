@@ -73,6 +73,8 @@
 .big-picture img, .gallery-wrapper nav img {
 	width: 100%;
 	height: auto;
+	position: relative;
+	z-index: 10;
 }
 .gallery-wrapper nav {
 	width: 20%;
@@ -107,10 +109,10 @@
 	top: 0;
 	left: 0;
 	content: " ";
+	z-index: 20;
 }
 .loading {
 	position: absolute;
-	z-index: -1;
 	font-size: 200%;
 	top: 50%;
 	left:50%;

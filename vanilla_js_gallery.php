@@ -41,13 +41,11 @@ class plgContentVanilla_js_gallery extends JPlugin {
 		$sitePath = JPATH_SITE;
 		$siteUrl  = JURI::root(true);
 		$pluginLivePath = $siteUrl.'/plugins/content/'.$this->plg_name;
-		$defaultImagePath = 'images';
+		//$defaultImagePath = 'images';
 		
 		//JFactory::getApplication()->enqueueMessage($pluginLivePath);
 		
 		// Get parameters value
-		$width = $this->params->get('gallery_width','800')."px";
-		$height = $this->params->get('gallery_height','480')."px";
 		$galleries_rootfolder = $this->params->get('galleries_rootfolder','images');
 		
 		// Cleanups
@@ -105,6 +103,7 @@ class plgContentVanilla_js_gallery extends JPlugin {
 			//	)	end group
 			//	(	start group and capture it
 			//	.*	any carcter n times
+			//	? non greedy
 			//	)
 			//	(?:	start group and not capture it
 			//	\"	double quote
@@ -118,81 +117,23 @@ class plgContentVanilla_js_gallery extends JPlugin {
 			
 			//if there is at least 1 image run the plugin, otherwise simply delete plugin tag
 			if (count($imagesUrls[1])) {
-			
-			$imageUrl0 = $imagesUrls[1][0];
-			$imageUrl1 = $imagesUrls[1][1];
-			$imageUrl2 = $imagesUrls[1][2];
-			$imageUrl3 = $imagesUrls[1][3];
-			$imageUrl4 = $imagesUrls[1][4];
-			
-			$imageAlt0 = $imagesAlts[1][0];
-			$imageAlt1 = $imagesAlts[1][1];
-			$imageAlt2 = $imagesAlts[1][2];
-			$imageAlt3 = $imagesAlts[1][3];
-			$imageAlt4 = $imagesAlts[1][4];
-			
-			// Output
-			$plg_html = <<<EOT
-		
-				<div class="gallery-wrapper">
-					<figure class="big-picture" >
-						<div class="loading"><i class="icon-loop"></i></div>
-						<div class="prev-next">
-							<div class="prev">
-								<a><i class="icon-chevron-left"></i></a>
-							</div>
-							<div class="next">
-								<a><i class="icon-chevron-right"></i></a>
-							</div>
-						</div>
-						<!--the img tag is non positioned so it is renderd on bottom of the stack, even if it comes after the prev-next block-->
-						<img src="$imageUrl0" alt="$imageAlt0">
-						<div class="curtain"></div>
-					</figure>
-					<nav>
-						<ul>
-							<li class="active">
-								<div class="loading"><i class="icon-loop"></i></div>
-								<a target="_blank" href="$imageUrl0">
-									
-									<img src="$imageUrl0" alt="$imageAlt0">
-								</a>
-							</li>
-							<li>
-								<div class="loading"><i class="icon-loop"></i></div>
-								<a target="_blank" href="$imageUrl1">
-									<img src="$imageUrl1" alt="$imageAlt1">
-								</a>
-							</li>
-							<li>
-								<div class="loading"><i class="icon-loop"></i></div>
-								<a target="_blank" href="$imageUrl2">
-									<img src="$imageUrl2" alt="$imageAlt2">
-								</a>
-							</li>
-							<li>
-								<div class="loading"><i class="icon-loop"></i></div>
-								<a target="_blank" href="$imageUrl3">
-									<img src="$imageUrl3" alt="$imageAlt3">
-								</a>
-							</li>
-							<li>
-								<div class="loading"><i class="icon-loop"></i></div>
-								<a target="_blank" href="$imageUrl4">
-									<img src="$imageUrl4" alt="$imageAlt4">
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			
-EOT;
+				
+				$imagesData = vanilla_js_galleryHelper::processImages($galleries_rootfolder,$imagesUrls[1],$imagesAlts[1]);
+				
+				// Get the path for the layout file
+				$path = JPluginHelper::getLayoutPath('content', 'vanilla_js_gallery');
+
+				// Render the pagenav
+				ob_start();
+				include $path;
+				$plg_html = ob_get_clean();
+				
+				//JFactory::getApplication()->enqueueMessage($plg_html);
 			} else {
 				$plg_html = "";
 			}
 			
 			// Do the replace
-			//JFactory::getApplication()->enqueueMessage($tagcontent);
 			$row->text = preg_replace("#".$match."#", $plg_html, $row->text);
 
 		}// end foreach
